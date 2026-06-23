@@ -21,7 +21,7 @@ export function PoemStudio() {
           Atelier
         </p>
         <h1 className="font-serif text-4xl text-[var(--ink)] sm:text-5xl">
-          Générateur de poésie sous contrainte
+          Hasard poétique
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-sm text-[var(--ink)]/60">
           Choisis une ambiance, reçois dix mots, écris ton poème.
@@ -37,7 +37,7 @@ export function PoemStudio() {
           <button
             type="button"
             onClick={handleGenerate}
-            className="rounded-md bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--paper)] transition-opacity hover:opacity-90"
+            className="rounded-md bg-[var(--ink)] px-5 py-2.5 text-sm font-medium text-[var(--paper)] transition-opacity hover:opacity-90"
           >
             {words.length === 0 ? "Générer mes dix mots" : "Re-générer"}
           </button>
