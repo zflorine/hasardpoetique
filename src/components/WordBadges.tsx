@@ -5,9 +5,10 @@ const CATEGORY_LABEL: Record<Category, string> = {
   verbe: "Verbes",
   adjectif: "Adjectifs",
   adverbe: "Adverbe",
+  conjonction: "Conjonction",
 };
 
-const ORDER: Category[] = ["nom", "verbe", "adjectif", "adverbe"];
+const ORDER: Category[] = ["nom", "verbe", "adjectif", "adverbe", "conjonction"];
 
 type Props = {
   words: PickedWord[];
@@ -27,6 +28,7 @@ export function WordBadges({ words }: Props) {
     verbe: [],
     adjectif: [],
     adverbe: [],
+    conjonction: [],
   };
   for (const w of words) grouped[w.category].push(w);
 
