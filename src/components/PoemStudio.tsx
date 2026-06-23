@@ -21,7 +21,7 @@ export function PoemStudio() {
           Atelier
         </p>
         <h1 className="font-serif text-4xl text-[var(--ink)] sm:text-5xl">
-          Générateur de poésie sous contrainte
+          Hasard poétique
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-sm text-[var(--ink)]/60">
           Choisis une ambiance, reçois dix mots, écris ton poème.
