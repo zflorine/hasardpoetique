@@ -77,7 +77,7 @@ export function WordBadges({ words, poemText }: Props) {
     <div>
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--ink)]/50">
-          Tes mots
+          10 mots au hasard
         </h3>
         <span className="text-xs text-[var(--ink)]/50">
           {usedCount} / {words.length} utilisés
@@ -96,7 +96,7 @@ export function WordBadges({ words, poemText }: Props) {
             fx === "in"
               ? "animate-scale-in ring-2 ring-[var(--accent)]/50"
               : fx === "out"
-                ? "animate-shake-fade ring-2 ring-rose-400/60"
+                ? "animate-shake-fade ring-2 ring-white/70"
                 : "";
           return (
             <span key={`${w.category}-${w.word}-${i}`} className={`${base} ${state} ${anim}`}>
