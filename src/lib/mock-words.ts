@@ -1,4 +1,4 @@
-export type Category = "nom" | "verbe" | "adjectif" | "adverbe";
+export type Category = "nom" | "verbe" | "adjectif" | "adverbe" | "conjonction";
 
 export type Theme =
   | "romantisme"
