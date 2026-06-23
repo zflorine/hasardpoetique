@@ -77,7 +77,7 @@ export function PoemStudio() {
       </section>
 
       <section className="mb-10">
-        <WordBadges words={words} />
+        <WordBadges words={words} poemText={`${title} ${content}`} />
       </section>
 
       {showPicker && (
@@ -112,7 +112,7 @@ export function PoemStudio() {
           type="button"
           onClick={handleDownload}
           disabled={!canExport || downloading}
-          className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-md bg-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--paper)] transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {downloading ? "Export…" : "Télécharger en PNG"}
         </button>
