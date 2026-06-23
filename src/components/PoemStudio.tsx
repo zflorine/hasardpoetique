@@ -1,18 +1,50 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { toPng } from "html-to-image";
 import { ThemeSelector } from "./ThemeSelector";
 import { WordBadges } from "./WordBadges";
 import { PoemEditor } from "./PoemEditor";
+import { BackgroundPicker } from "./BackgroundPicker";
 import { pickWords, type PickedWord, type Theme } from "@/lib/mock-words";
+import { BACKGROUNDS, type Background } from "@/lib/backgrounds";
 
 export function PoemStudio() {
   const [theme, setTheme] = useState<Theme>("romantisme");
   const [words, setWords] = useState<PickedWord[]>([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [background, setBackground] = useState<Background>(BACKGROUNDS[0]);
+  const [showPicker, setShowPicker] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   function handleGenerate() {
     setWords(pickWords(theme));
   }
+
+  async function handleDownload() {
+    if (!cardRef.current) return;
+    setDownloading(true);
+    try {
+      const dataUrl = await toPng(cardRef.current, {
+        pixelRatio: 2,
+        cacheBust: true,
+      });
+      const link = document.createElement("a");
+      const slug = (title.trim() || "poeme")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+      link.download = `${slug || "poeme"}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error("Export PNG failed", err);
+    } finally {
+      setDownloading(false);
+    }
+  }
+
+  const canExport = content.trim().length > 0 || title.trim().length > 0;
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-12 sm:py-20">
@@ -48,39 +80,41 @@ export function PoemStudio() {
         <WordBadges words={words} />
       </section>
 
+      {showPicker && (
+        <BackgroundPicker
+          value={background}
+          onChange={setBackground}
+          onClose={() => setShowPicker(false)}
+        />
+      )}
+
       <section className="mb-8">
         <PoemEditor
+          ref={cardRef}
           title={title}
           content={content}
           onTitleChange={setTitle}
           onContentChange={setContent}
+          background={background.css}
+          ink={background.ink}
         />
       </section>
 
       <section className="flex flex-wrap items-center justify-end gap-3">
         <button
           type="button"
-          disabled
-          title="Bientôt disponible"
-          className="cursor-not-allowed rounded-md border border-[var(--ink)]/20 bg-transparent px-4 py-2 text-sm text-[var(--ink)]/40"
+          onClick={() => setShowPicker((v) => !v)}
+          className="rounded-md border border-[var(--ink)]/20 bg-transparent px-4 py-2 text-sm text-[var(--ink)] transition-colors hover:bg-[var(--ink)]/5"
         >
-          Personnaliser le fond
+          {showPicker ? "Masquer les fonds" : "Personnaliser le fond"}
         </button>
         <button
           type="button"
-          disabled
-          title="Bientôt disponible"
-          className="cursor-not-allowed rounded-md border border-[var(--ink)]/20 bg-transparent px-4 py-2 text-sm text-[var(--ink)]/40"
+          onClick={handleDownload}
+          disabled={!canExport || downloading}
+          className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Télécharger en PNG
-        </button>
-        <button
-          type="button"
-          disabled
-          title="Bientôt disponible — réservé aux comptes connectés"
-          className="cursor-not-allowed rounded-md border border-[var(--ink)]/20 bg-transparent px-4 py-2 text-sm text-[var(--ink)]/40"
-        >
-          Sauvegarder
+          {downloading ? "Export…" : "Télécharger en PNG"}
         </button>
       </section>
     </main>
