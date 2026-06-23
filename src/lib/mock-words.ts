@@ -31,7 +31,7 @@ export const THEMES: { key: Theme; label: string }[] = [
   { key: "surprise", label: "Surprise" },
 ];
 
-type WordBank = Record<Category, string[]>;
+type WordBank = Record<BankCategory, string[]>;
 
 export const WORDS: Record<ThemeKey, WordBank> = {
   romantisme: {
