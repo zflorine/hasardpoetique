@@ -1,5 +1,7 @@
 export type Category = "nom" | "verbe" | "adjectif" | "adverbe" | "conjonction";
 
+type BankCategory = Exclude<Category, "conjonction">;
+
 export type Theme =
   | "romantisme"
   | "amour"
