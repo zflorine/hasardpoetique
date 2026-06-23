@@ -1,27 +1,45 @@
+import { forwardRef } from "react";
+
 type Props = {
   title: string;
   content: string;
   onTitleChange: (v: string) => void;
   onContentChange: (v: string) => void;
+  background?: string;
+  ink?: string;
 };
 
-export function PoemEditor({ title, content, onTitleChange, onContentChange }: Props) {
+export const PoemEditor = forwardRef<HTMLDivElement, Props>(function PoemEditor(
+  { title, content, onTitleChange, onContentChange, background, ink },
+  ref,
+) {
+  const inkColor = ink ?? "var(--ink)";
+  const bg = background ?? "var(--paper-2)";
   return (
-    <div className="rounded-lg border border-[var(--ink)]/15 bg-[var(--paper-2)] p-6 shadow-sm sm:p-10">
+    <div
+      ref={ref}
+      className="rounded-lg border border-black/10 p-6 shadow-sm transition-colors sm:p-10"
+      style={{ background: bg, color: inkColor }}
+    >
       <input
         type="text"
         value={title}
         onChange={(e) => onTitleChange(e.target.value)}
         placeholder="Titre (optionnel)"
-        className="w-full border-0 border-b border-[var(--ink)]/10 bg-transparent pb-3 font-serif text-2xl text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--accent)] focus:outline-none"
+        style={{
+          color: inkColor,
+          borderColor: `color-mix(in srgb, ${inkColor} 20%, transparent)`,
+        }}
+        className="w-full border-0 border-b bg-transparent pb-3 font-serif text-2xl placeholder:opacity-40 focus:outline-none"
       />
       <textarea
         value={content}
         onChange={(e) => onContentChange(e.target.value)}
         placeholder={"Laisse couler les mots…\n\nIl n'y a ni limite, ni format."}
         rows={14}
-        className="mt-6 w-full resize-y border-0 bg-transparent font-serif text-lg leading-relaxed text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:outline-none"
+        style={{ color: inkColor }}
+        className="mt-6 w-full resize-y border-0 bg-transparent font-serif text-lg leading-relaxed placeholder:opacity-40 focus:outline-none"
       />
     </div>
   );
-}
+});
