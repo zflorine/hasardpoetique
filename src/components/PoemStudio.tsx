@@ -37,7 +37,7 @@ export function PoemStudio() {
           <button
             type="button"
             onClick={handleGenerate}
-            className="rounded-md bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--paper)] transition-opacity hover:opacity-90"
+            className="rounded-md bg-[var(--ink)] px-5 py-2.5 text-sm font-medium text-[var(--paper)] transition-opacity hover:opacity-90"
           >
             {words.length === 0 ? "Générer mes dix mots" : "Re-générer"}
           </button>
