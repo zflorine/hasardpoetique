@@ -107,11 +107,17 @@ function shuffle<T>(arr: T[]): T[] {
 
 export type PickedWord = { word: string; category: Category };
 
-const PLAN: { category: Category; count: number }[] = [
+const PLAN: { category: BankCategory; count: number }[] = [
   { category: "nom", count: 3 },
-  { category: "verbe", count: 3 },
+  { category: "verbe", count: 2 },
   { category: "adjectif", count: 3 },
   { category: "adverbe", count: 1 },
+];
+
+export const CONJONCTIONS = [
+  "mais", "ou", "et", "donc", "or", "ni", "car",
+  "quand", "si", "lorsque", "puisque", "comme",
+  "tandis que", "afin que", "bien que", "pourtant",
 ];
 
 export function pickWords(theme: Theme): PickedWord[] {
@@ -127,5 +133,7 @@ export function pickWords(theme: Theme): PickedWord[] {
     const picks = shuffle(Array.from(new Set(pool))).slice(0, count);
     for (const w of picks) result.push({ word: w, category });
   }
+  const [conj] = shuffle(CONJONCTIONS).slice(0, 1);
+  result.push({ word: conj, category: "conjonction" });
   return result;
 }
