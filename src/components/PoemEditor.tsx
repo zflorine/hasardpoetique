@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   title: string;
@@ -13,6 +14,7 @@ export const PoemEditor = forwardRef<HTMLDivElement, Props>(function PoemEditor(
   { title, content, onTitleChange, onContentChange, background, ink },
   ref,
 ) {
+  const { t } = useI18n();
   const inkColor = ink ?? "var(--ink)";
   const bg = background ?? "var(--paper-2)";
   return (
@@ -25,7 +27,7 @@ export const PoemEditor = forwardRef<HTMLDivElement, Props>(function PoemEditor(
         type="text"
         value={title}
         onChange={(e) => onTitleChange(e.target.value)}
-        placeholder="Titre (optionnel)"
+        placeholder={t.titlePlaceholder}
         style={{
           color: inkColor,
           borderColor: `color-mix(in srgb, ${inkColor} 20%, transparent)`,
@@ -35,7 +37,7 @@ export const PoemEditor = forwardRef<HTMLDivElement, Props>(function PoemEditor(
       <textarea
         value={content}
         onChange={(e) => onContentChange(e.target.value)}
-        placeholder={"Laisse couler les mots…\n\nIl n'y a ni limite, ni format."}
+        placeholder={t.contentPlaceholder}
         rows={14}
         style={{ color: inkColor }}
         className="mt-6 w-full resize-y border-0 bg-transparent font-serif text-lg leading-relaxed placeholder:opacity-40 focus:outline-none"

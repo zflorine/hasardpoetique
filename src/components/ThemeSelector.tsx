@@ -1,14 +1,17 @@
-import { THEMES, type Theme } from "@/lib/mock-words";
+import { getThemes } from "@/lib/mock-words";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
-  value: Theme;
-  onChange: (t: Theme) => void;
+  value: string;
+  onChange: (t: string) => void;
 };
 
 export function ThemeSelector({ value, onChange }: Props) {
+  const { lang } = useI18n();
+  const themes = getThemes(lang);
   return (
     <div className="flex flex-wrap gap-2">
-      {THEMES.map((t) => {
+      {themes.map((t) => {
         const active = t.key === value;
         return (
           <button
