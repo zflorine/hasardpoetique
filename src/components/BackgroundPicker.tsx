@@ -1,4 +1,5 @@
 import { BACKGROUNDS, type Background } from "@/lib/backgrounds";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   value: Background;
@@ -7,18 +8,19 @@ type Props = {
 };
 
 export function BackgroundPicker({ value, onChange, onClose }: Props) {
+  const { t } = useI18n();
   return (
     <div className="mb-6 rounded-lg border border-[var(--ink)]/15 bg-[var(--paper-2)] p-5">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--ink)]/60">
-          Fond du poème
+          {t.backgroundHeading}
         </h3>
         <button
           type="button"
           onClick={onClose}
           className="text-xs text-[var(--ink)]/50 hover:text-[var(--ink)]"
         >
-          Fermer
+          {t.close}
         </button>
       </div>
       <div className="grid grid-cols-4 gap-3 sm:grid-cols-8">

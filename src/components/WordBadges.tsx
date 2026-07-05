@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { PickedWord } from "@/lib/mock-words";
+import { useI18n, type Lang } from "@/lib/i18n";
 
-function normalize(s: string): string {
+function normalizeLatin(s: string): string {
   return s
     .toLowerCase()
     .normalize("NFD")
@@ -9,18 +10,23 @@ function normalize(s: string): string {
     .replace(/[^a-z']/g, "");
 }
 
-/** Crude French stem: keep at least 3 chars, drop up to 3 trailing chars. */
+/** Crude French/English stem: keep at least 3 chars, drop up to 3 trailing chars. */
 function radical(word: string): string {
-  const n = normalize(word);
+  const n = normalizeLatin(word);
   if (n.length <= 4) return n;
   return n.slice(0, Math.max(3, n.length - 3));
 }
 
-function tokenize(text: string): string[] {
-  return text.split(/[^A-Za-zÀ-ÿ']+/).map(normalize).filter(Boolean);
+function tokenizeLatin(text: string): string[] {
+  return text.split(/[^A-Za-zÀ-ÿ']+/).map(normalizeLatin).filter(Boolean);
 }
 
-function isUsed(word: string, tokens: string[]): boolean {
+function isUsed(word: string, text: string, lang: Lang): boolean {
+  if (lang === "zh") {
+    // No stemming in Chinese: substring match is the natural check.
+    return text.includes(word);
+  }
+  const tokens = tokenizeLatin(text);
   const r = radical(word);
   if (!r) return false;
   return tokens.some((t) => t.startsWith(r));
@@ -32,8 +38,8 @@ type Props = {
 };
 
 export function WordBadges({ words, poemText }: Props) {
-  const tokens = tokenize(poemText);
-  const used = words.map((w) => isUsed(w.word, tokens));
+  const { lang, t } = useI18n();
+  const used = words.map((w) => isUsed(w.word, poemText, lang));
 
   const prevUsedRef = useRef<boolean[]>([]);
   const [flash, setFlash] = useState<Record<string, "in" | "out" | undefined>>({});
@@ -50,7 +56,7 @@ export function WordBadges({ words, poemText }: Props) {
     });
     if (Object.keys(next).length > 0) {
       setFlash((f) => ({ ...f, ...next }));
-      const t = setTimeout(() => {
+      const timer = setTimeout(() => {
         setFlash((f) => {
           const copy = { ...f };
           for (const k of Object.keys(next)) delete copy[k];
@@ -58,17 +64,13 @@ export function WordBadges({ words, poemText }: Props) {
         });
       }, 600);
       prevUsedRef.current = used;
-      return () => clearTimeout(t);
+      return () => clearTimeout(timer);
     }
     prevUsedRef.current = used;
   }, [poemText, words]);
 
   if (words.length === 0) {
-    return (
-      <p className="text-sm italic text-[var(--ink)]/50">
-        Choisis une ambiance puis génère tes dix mots.
-      </p>
-    );
+    return <p className="text-sm italic text-[var(--ink)]/50">{t.emptyHint}</p>;
   }
 
   const usedCount = used.filter(Boolean).length;
@@ -77,10 +79,10 @@ export function WordBadges({ words, poemText }: Props) {
     <div>
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--ink)]/50">
-          10 mots au hasard
+          {t.wordsHeading}
         </h3>
         <span className="text-xs text-[var(--ink)]/50">
-          {usedCount} / {words.length} utilisés
+          {t.wordsUsed(usedCount, words.length)}
         </span>
       </div>
       <div className="flex flex-wrap gap-2">
