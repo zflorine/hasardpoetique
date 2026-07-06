@@ -59,7 +59,7 @@ export const STRINGS: Record<Lang, Dict> = {
     regenerate: "Shuffle again",
     wordsHeading: "10 random words",
     wordsUsed: (u, t) => `${u} / ${t} used`,
-    emptyHint: "Pick a mood, then generate your ten words.",
+    emptyHint: "Create your poem using the provided words as much as possible.",
     titlePlaceholder: "Title (optional)",
     contentPlaceholder: "Let the words flow…\n\nNo limit, no format.",
     backgroundHeading: "Poem background",
