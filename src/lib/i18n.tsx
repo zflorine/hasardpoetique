@@ -79,7 +79,7 @@ export const STRINGS: Record<Lang, Dict> = {
     regenerate: "重新抽取",
     wordsHeading: "十个随机词",
     wordsUsed: (u, t) => `已用 ${u} / ${t}`,
-    emptyHint: "先选一种氛围,再生成十个词。",
+    emptyHint: "尽量使用提供的词语创作你的诗。",
     titlePlaceholder: "标题(可选)",
     contentPlaceholder: "让文字自由流淌……\n\n没有格式,没有限制。",
     backgroundHeading: "诗的背景",
