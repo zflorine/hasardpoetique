@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hasardpoetique.lovable.app/sitemap.xml
