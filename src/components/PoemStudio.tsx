@@ -68,7 +68,7 @@ export function PoemStudio() {
         </header>
 
         <section className="mb-10">
-          <h2 className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-[var(--ink)]/50">
+          <h2 className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-[var(--ink)]/75">
             {t.ambianceLabel}
           </h2>
           <ThemeSelector value={theme} onChange={setTheme} />

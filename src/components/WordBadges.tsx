@@ -70,7 +70,7 @@ export function WordBadges({ words, poemText }: Props) {
   }, [poemText, words]);
 
   if (words.length === 0) {
-    return <p className="text-sm italic text-[var(--ink)]/50">{t.emptyHint}</p>;
+    return <p className="text-sm italic text-[var(--ink)]/75">{t.emptyHint}</p>;
   }
 
   const usedCount = used.filter(Boolean).length;
@@ -78,10 +78,10 @@ export function WordBadges({ words, poemText }: Props) {
   return (
     <div>
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--ink)]/50">
+        <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--ink)]/75">
           {t.wordsHeading}
         </h3>
-        <span className="text-xs text-[var(--ink)]/50">
+        <span className="text-xs text-[var(--ink)]/75">
           {t.wordsUsed(usedCount, words.length)}
         </span>
       </div>
