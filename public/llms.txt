@@ -1,0 +1,9 @@
+# Hasard Poétique
+
+> Un studio de poésie minimaliste : dix mots tirés au hasard, compose ton poème.
+
+Hasard Poétique est une application web qui propose dix mots aléatoires selon une ambiance choisie (nature, urbain, onirique, etc.) et un fond visuel apaisant. L'utilisateur assemble ces mots pour créer un court poème. L'interface est disponible en français, anglais et chinois, avec des banques de mots natives pour chaque langue.
+
+## Pages
+
+- [Accueil](/): Studio de composition poétique — sélection d'ambiance, tirage des mots et éditeur de poème.
