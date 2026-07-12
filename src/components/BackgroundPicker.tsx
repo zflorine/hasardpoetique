@@ -18,7 +18,7 @@ export function BackgroundPicker({ value, onChange, onClose }: Props) {
         <button
           type="button"
           onClick={onClose}
-          className="text-xs text-[var(--ink)]/50 hover:text-[var(--ink)]"
+          className="text-xs text-[var(--ink)]/75 hover:text-[var(--ink)]"
         >
           {t.close}
         </button>
@@ -44,7 +44,7 @@ export function BackgroundPicker({ value, onChange, onClose }: Props) {
               />
               <span
                 className={`text-[10px] uppercase tracking-wider ${
-                  active ? "text-[var(--ink)]" : "text-[var(--ink)]/50"
+                  active ? "text-[var(--ink)]" : "text-[var(--ink)]/75"
                 }`}
               >
                 {bg.label}
